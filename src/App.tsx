@@ -138,13 +138,13 @@ export default function App() {
               <h2 id="packages-title">Pick a package. We'll confirm the price for your vehicle.</h2>
             </div>
             <div className="package-groups">
-              {(["exterior", "interior", "ceramic"] as PackageGroup[]).map((g) => (
-                <div className="package-group" key={g}>
-                  <h3>{groupLabels[g]}</h3>
-                  <ul>
-                    {packages
-                      .filter((p) => p.group === g)
-                      .map((p) => (
+              {(["exterior", "interior", "ceramic"] as PackageGroup[]).map((g) => {
+                const items = packages.filter((p) => p.group === g);
+                return (
+                  <div className="package-group" key={g} style={{ gridRow: `span ${items.length + 1}` }}>
+                    <h3>{groupLabels[g]}</h3>
+                    <ul style={{ gridRow: `span ${items.length}` }}>
+                      {items.map((p) => (
                         <li key={p.id} className="package-row">
                           <div>
                             <p className="package-name">{p.name}</p>
@@ -158,9 +158,10 @@ export default function App() {
                           </div>
                         </li>
                       ))}
-                  </ul>
-                </div>
-              ))}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

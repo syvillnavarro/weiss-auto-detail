@@ -742,7 +742,13 @@ p {
 .package-groups {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  column-gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.package-group,
+.package-group ul {
+  display: grid;
+  grid-template-rows: subgrid;
 }
 
 .package-group h3 {
@@ -1060,6 +1066,7 @@ p {
 
   .package-group:last-child {
     grid-column: 1 / -1;
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
   }
 }
 
@@ -1225,6 +1232,9 @@ p {
     grid-template-columns: 1fr;
   }
 
+  .package-group + .package-group {
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
 }
 
 @media (max-width: 359px) {
