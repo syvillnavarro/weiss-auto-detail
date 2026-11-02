@@ -134,6 +134,7 @@ p {
   border: 1px solid transparent;
   font: 600 0.95rem/1 var(--body);
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
   transition:
     background-color 0.2s,
@@ -209,6 +210,10 @@ p {
   display: flex;
   align-items: center;
   gap: 2rem;
+}
+
+.brand {
+  flex: none;
 }
 
 .brand img {
@@ -1169,6 +1174,10 @@ p {
 }
 
 @media (max-width: 699px) {
+  .header-inner {
+    gap: 1rem;
+  }
+
   .header-cta {
     min-height: 38px;
     padding: 0 1rem;
@@ -1181,10 +1190,11 @@ p {
 
   .hero {
     min-height: calc(100svh - var(--nav) - 2rem);
+    padding-top: 9rem;
   }
 
   .hero::after {
-    background: linear-gradient(0deg, rgba(20, 22, 24, 0.94) 0%, rgba(20, 22, 24, 0.6) 48%, rgba(20, 22, 24, 0.05) 78%);
+    content: none;
   }
 
   .hero-media img {
@@ -1192,7 +1202,19 @@ p {
   }
 
   .hero-copy {
+    padding-top: 5rem;
     padding-bottom: 2.4rem;
+    background: linear-gradient(
+      0deg,
+      rgba(20, 22, 24, 0.94) 0%,
+      rgba(20, 22, 24, 0.76) calc(100% - 5rem),
+      rgba(20, 22, 24, 0) 100%
+    );
+  }
+
+  .hero .label {
+    color: #ebe6dc;
+    text-shadow: 0 1px 10px rgba(20, 22, 24, 0.6);
   }
 
   .hero-actions .btn {
@@ -1203,6 +1225,21 @@ p {
     grid-template-columns: 1fr;
   }
 
+}
+
+@media (max-width: 359px) {
+  .header-inner {
+    gap: 0.75rem;
+  }
+
+  .brand img {
+    width: 92px;
+  }
+
+  .header-cta {
+    padding: 0 0.8rem;
+    font-size: 0.78rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
