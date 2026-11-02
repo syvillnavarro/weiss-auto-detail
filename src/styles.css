@@ -739,6 +739,14 @@ p {
   margin-bottom: clamp(2.2rem, 4vw, 3.4rem);
 }
 
+.packages .section-head {
+  max-width: none;
+}
+
+.title-line {
+  display: block;
+}
+
 .package-groups {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

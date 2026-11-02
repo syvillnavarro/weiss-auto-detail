@@ -135,7 +135,10 @@ export default function App() {
           <div className="wrap">
             <div className="section-head">
               <p className="label">All packages</p>
-              <h2 id="packages-title">Pick a package. We'll confirm the price for your vehicle.</h2>
+              <h2 id="packages-title">
+                <span className="title-line">Pick a package.</span>{" "}
+                <span className="title-line">We'll confirm the price for your vehicle.</span>
+              </h2>
             </div>
             <div className="package-groups">
               {(["exterior", "interior", "ceramic"] as PackageGroup[]).map((g) => {
