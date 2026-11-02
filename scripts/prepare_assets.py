@@ -2,12 +2,16 @@
 
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "source-assets"
 OUT = ROOT / "src" / "assets" / "img"
+PUBLIC = ROOT / "public"
 OUT.mkdir(parents=True, exist_ok=True)
+PUBLIC.mkdir(exist_ok=True)
+
+LOGO_BLUE = (0, 63, 204)
 
 FILES = {
     "corvette": "f7a515_c483c270a41741a38efbf90cc913772d_mv2.jpg",
@@ -31,6 +35,22 @@ def save_jpg(image: Image.Image, name: str, longest: int, quality: int = 80) -> 
 
 def open_src(key: str) -> Image.Image:
     return Image.open(SRC / FILES[key])
+
+
+def render_icon(mark: Image.Image, size: int, mark_width: float, rounded: bool) -> Image.Image:
+    canvas = 1024
+    icon = Image.new("RGBA", (canvas, canvas), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(icon)
+    if rounded:
+        draw.rounded_rectangle((0, 0, canvas - 1, canvas - 1), radius=canvas * 0.22, fill=LOGO_BLUE)
+    else:
+        draw.rectangle((0, 0, canvas, canvas), fill=LOGO_BLUE)
+    width = round(canvas * mark_width)
+    height = round(mark.height * width / mark.width)
+    glyph = Image.new("RGBA", (width, height), (255, 255, 255, 0))
+    glyph.putalpha(mark.resize((width, height), Image.Resampling.LANCZOS))
+    icon.alpha_composite(glyph, ((canvas - width) // 2, (canvas - height) // 2))
+    return icon.resize((size, size), Image.Resampling.LANCZOS)
 
 
 corvette = open_src("corvette")
@@ -60,3 +80,16 @@ white = Image.new("RGBA", logo.size, (255, 255, 255, 0))
 white.putalpha(alpha)
 white.save(OUT / "logo-white.png", optimize=True)
 print("logo", logo.size)
+
+# The car outline and AUTO DETAIL are white; the checkered W is the first blue shape.
+red, _, _, _ = logo.split()
+blue = ImageChops.multiply(alpha, red.point(lambda v: 255 if v < 128 else 0))
+inked = [blue.crop((x, 0, x + 1, blue.height)).getbbox() is not None for x in range(blue.width)]
+start = inked.index(True)
+w_mark = blue.crop((start, 0, inked.index(False, start), blue.height))
+w_mark = w_mark.crop(w_mark.getbbox())
+
+favicons = [render_icon(w_mark, size, 0.88, rounded=True) for size in (16, 32, 48)]
+favicons[-1].save(PUBLIC / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)], append_images=favicons[:-1])
+render_icon(w_mark, 180, 0.72, rounded=False).convert("RGB").save(PUBLIC / "apple-touch-icon.png", optimize=True)
+print("icons from W", w_mark.size)

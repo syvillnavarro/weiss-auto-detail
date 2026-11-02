@@ -1,6 +1,6 @@
 # Asset register
 
-Every image comes from Weiss Auto Detail's own website, https://www.weissautodetail.com/, downloaded November 1, 2026. The showcase uses the same photo their site shows beside each package. Originals are kept in `source-assets/` (not committed). `scripts/prepare_assets.py` makes the web copies in `src/assets/img/`.
+Every image comes from Weiss Auto Detail's own website, https://www.weissautodetail.com/, downloaded November 1, 2026. The showcase uses the same photo their site shows beside each package. Originals are kept in `source-assets/` (not committed). `scripts/prepare_assets.py` makes the web copies in `src/assets/img/` and the icons in `public/`.
 
 Usage approval from Weiss is still needed for every file before the site goes live.
 
@@ -19,6 +19,7 @@ Usage approval from Weiss is still needed for every file before the site goes li
 | `coating-home.jpg` | `11062b_3188…_mv2_d_4288_2848_s_4_2.jpg` | Ceramic Coating Home | | Wix stock photo, not Weiss's work. Captioned "Illustrative photo". Wix media is licensed for Wix sites, so replace it before this leaves Wix |
 | `logo-blue.png` | `f7a515_a4b2…_mv2.png` | | Light backgrounds | Trimmed to the mark, colour unchanged |
 | `logo-white.png` | same | | Dark navigation and footer | Same shape, filled white. Needs Weiss approval |
+| `public/favicon.ico` (16, 32, 48 px), `public/apple-touch-icon.png` (180 px) | same | | Browser tab, bookmarks, phone home screen | The checkered W from the logo, white on the logo blue (#003FCC). Their live site uses the Wix default icon. Needs Weiss approval |
 
 Not used: Owner's Pride logo and product image (supplier marketing), and Wix stock icons.
 
